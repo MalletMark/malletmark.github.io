@@ -1,3 +1,3 @@
 module.exports = {
-    publicPath: '/lsbn-weather/'
+    publicPath: '/'
   }
