@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <WeatherPanel time="2:30 PM" temp="60" weather="Windy" icon="https://images.vexels.com/media/users/3/136212/isolated/preview/7747f9f7a1dce4184897316278a76181-hurricane-wind-storm-by-vexels.png" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import WeatherPanel from './components/WeatherPanel.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    WeatherPanel
   }
 }
 </script>
