@@ -2,10 +2,10 @@
   <div class="weatherpanel p-5">
     <h1>LSBN Weather Forecast</h1>
     <div
-      v-for="(item, index) in cards"
+      v-for="(item) in cards"
       :key="item"
       :ref="addCard"
-      class="card d-inline-flex m-2 bd-highlight"
+      class="b-0 shadow card d-inline-flex m-2 bd-highlight"
       style="width: 10rem"
     >
       <div class="card-body p-0">
@@ -20,29 +20,23 @@
           class="tempBox border-0 w-100 text-center m-0"
           style="font-size: 5rem; line-height: 0"
         />
-        <img src="" class="img-thumbnail border-0" />
-        <div class="dropdown">
-          <button
-            class="btn w-100 h2"
-            type="button"
-            id="dropdownMenuButton1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            {{ index }}. {{ item }}
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </div>
-        <v-select :options="options" label="title">
-          <template slot="option" slot-scope="option">
-            <img :src="option.src" /> {{ option.title }}
-          </template>
-        </v-select>
+        <img :src="item.src" class="img-thumbnail border-0" />
+        <p>{{ item.title }}</p>
       </div>
+      <v-select
+        class="weather-dd"
+        :options="weatherOpts"
+        :clearable="false"
+        append-icon-cb="()"
+        v-on:input="selectWeather($event, item.ind)"
+        item-text="title"
+        item-value="src"
+        return-object
+      >
+        <template slot="option" slot-scope="option">
+          <img :src="option.src" class="img-thumbnail border-0" />
+        </template>
+      </v-select>
     </div>
     <div id="example-1">
       <button v-on:click="addCard">Add</button>
@@ -52,6 +46,8 @@
 </template>
 
 <script>
+import "vue-select/dist/vue-select.css";
+
 export default {
   name: "WeatherPanel",
   props: {
@@ -59,8 +55,19 @@ export default {
   },
   data() {
     return {
-      cards: ["1"],
-      options: [
+      cards: [
+        {
+          ind: 0,
+          title: "Windy",
+          src: "https://cdn2.iconfinder.com/data/icons/weather-and-meteorology-simplicon-set/102/windy-cloud-wind-512.png"
+        }
+      ],
+      weatherIco: {
+        title: "Windy",
+        src:
+          "https://cdn2.iconfinder.com/data/icons/weather-and-meteorology-simplicon-set/102/windy-cloud-wind-512.png",
+      },
+      weatherOpts: [
         {
           title: "Windy",
           src:
@@ -76,10 +83,16 @@ export default {
   },
   methods: {
     addCard() {
-      this.cards.push(this.cards.length + 1);
+      this.cards.push({ind:this.cards.length, title:"Windy", src: "https://cdn2.iconfinder.com/data/icons/weather-and-meteorology-simplicon-set/102/windy-cloud-wind-512.png"});
     },
     removeCard() {
       this.cards.pop();
+    },
+    selectWeather(value, ind) {
+      console.log(value);
+      console.log(ind);
+      this.cards[ind].title = value.title;
+      this.cards[ind].src = value.src;
     },
   },
   beforeUpdate() {},
@@ -91,10 +104,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
 h1 {
-  font-family: 'Bebas Neue', cursive;
+  font-family: "Bebas Neue", cursive;
 }
 .timeBox::placeholder {
   color: white;
@@ -106,15 +119,13 @@ h1 {
   text-align: center;
   border: 0px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.vs__dropdown-toggle {
+  border: none !important;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+.weather-dd .vs__dropdown-toggle:before {
+  border: none !important;
 }
-a {
-  color: #42b983;
+.weather-dd .vs__dropdown-toggle:after {
+  border: none !important;
 }
 </style>
