@@ -21,7 +21,7 @@
           style="font-size: 5rem; line-height: 0"
         />
         <img :src="item.src" class="img-thumbnail border-0" />
-        <p>{{ item.title }}</p>
+        <h1 class="weather-title">{{ item.title }}</h1>
       </div>
       <v-select
         class="weather-dd"
@@ -59,31 +59,60 @@ export default {
         {
           ind: 0,
           title: "Windy",
-          src: "https://cdn2.iconfinder.com/data/icons/weather-and-meteorology-simplicon-set/102/windy-cloud-wind-512.png"
+          src: require('@/assets/w-icon-windy.png')
         }
       ],
-      weatherIco: {
-        title: "Windy",
-        src:
-          "https://cdn2.iconfinder.com/data/icons/weather-and-meteorology-simplicon-set/102/windy-cloud-wind-512.png",
-      },
       weatherOpts: [
         {
-          title: "Windy",
-          src:
-            "https://cdn2.iconfinder.com/data/icons/weather-and-meteorology-simplicon-set/102/windy-cloud-wind-512.png",
+          title: "Cloudy",
+          src: require('@/assets/w-icon-cloudy.png'),
+        },
+        {
+          title: "Ice",
+          src: require('@/assets/w-icon-ice.png'),
+        },
+        {
+          title: "Partially Cloudy",
+          src: require('@/assets/w-icon-light_cloudy.png'),
+        },
+        {
+          title: "Light Rain",
+          src: require('@/assets/w-icon-light_rain.png'),
+        },
+        {
+          title: "Rainy",
+          src: require('@/assets/w-icon-rainy.png'),
+        },
+        {
+          title: "Snow",
+          src: require('@/assets/w-icon-snow.png'),
         },
         {
           title: "Sunny",
-          src:
-            "https://cdn4.iconfinder.com/data/icons/spring-theme-line/32/sun--512.png",
+          src: require('@/assets/w-icon-sunny.png'),
+        },
+        {
+          title: "Thunder",
+          src: require('@/assets/w-icon-thunder.png'),
+        },
+        {
+          title: "Storm",
+          src: require('@/assets/w-icon-thunder_rain.png'),
+        },
+        {
+          title: "Tornado",
+          src: require('@/assets/w-icon-tornado.png'),
+        },
+        {
+          title: "Windy",
+          src: require('@/assets/w-icon-windy.png'),
         },
       ],
     };
   },
   methods: {
     addCard() {
-      this.cards.push({ind:this.cards.length, title:"Windy", src: "https://cdn2.iconfinder.com/data/icons/weather-and-meteorology-simplicon-set/102/windy-cloud-wind-512.png"});
+      this.cards.push({ind:this.cards.length, title:"Windy", src: require('@/assets/w-icon-windy.png')});
     },
     removeCard() {
       this.cards.pop();
@@ -108,6 +137,9 @@ export default {
 
 h1 {
   font-family: "Bebas Neue", cursive;
+}
+.weather-title {
+  min-height: 100px;
 }
 .timeBox::placeholder {
   color: white;
