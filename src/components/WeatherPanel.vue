@@ -12,11 +12,14 @@
         <input
           type="text"
           placeholder="1:30 PM"
-          class="timeBox border-0 p-2 h2 mb-2 bg-danger text-white text-center w-100"
+          class="timeBox border-0 p-2 h2 mb-2 text-grey text-center w-100"
+          :class="item.tempcolor"
         />
         <input
           type="text"
           placeholder="60"
+          v-model="item.temp"
+          v-on:change="selectTemp($event, item.ind)"
           class="tempBox border-0 w-100 text-center m-0"
           style="font-size: 5rem; line-height: 0"
         />
@@ -55,9 +58,11 @@ export default {
   },
   data() {
     return {
+      tempNum: 0,
       cards: [
         {
           ind: 0,
+          temp: 60, tempcolor: "bg-primary",
           title: "Windy",
           src: require('@/assets/w-icon-windy.png')
         }
@@ -112,14 +117,36 @@ export default {
   },
   methods: {
     addCard() {
-      this.cards.push({ind:this.cards.length, title:"Windy", src: require('@/assets/w-icon-windy.png')});
+      this.cards.push({ind:this.cards.length, temp:60, tempcolor:"bg-primary", title:"Windy", src: require('@/assets/w-icon-windy.png')});
     },
     removeCard() {
       this.cards.pop();
     },
+    selectTemp(value, ind) {
+      var tempVal = Number(this.cards[ind].temp);
+      if (tempVal < 23) {
+        this.cards[ind].tempcolor = "temp-col-23";
+      } else if (tempVal < 32) {
+        this.cards[ind].tempcolor = "temp-col-32";
+      } else if (tempVal < 41) {
+        this.cards[ind].tempcolor = "temp-col-41";
+      } else if (tempVal < 50) {
+        this.cards[ind].tempcolor = "temp-col-50";
+      } else if (tempVal < 59) {
+        this.cards[ind].tempcolor = "temp-col-59";
+      } else if (tempVal < 68) {
+        this.cards[ind].tempcolor = "temp-col-68";
+      } else if (tempVal < 77) {
+        this.cards[ind].tempcolor = "temp-col-77";
+      } else if (tempVal < 86) {
+        this.cards[ind].tempcolor = "temp-col-86";
+      } else if (tempVal < 95) {
+        this.cards[ind].tempcolor = "temp-col-95";
+      } else {
+        this.cards[ind].tempcolor = "temp-col-104";
+      }
+    },
     selectWeather(value, ind) {
-      console.log(value);
-      console.log(ind);
       this.cards[ind].title = value.title;
       this.cards[ind].src = value.src;
     },
@@ -159,5 +186,35 @@ h1 {
 }
 .weather-dd .vs__dropdown-toggle:after {
   border: none !important;
+}
+.temp-col-23 {
+  background-color: #001d8f;
+}
+.temp-col-32 {
+  background-color: #0342ff;
+}
+.temp-col-41 {
+  background-color: #4491fc;
+}
+.temp-col-50 {
+  background-color: #a8d2ff;
+}
+.temp-col-59 {
+  background-color: #3feff2;
+}
+.temp-col-68 {
+  background-color: #1e9400;
+}
+.temp-col-77 {
+  background-color: #a4eb2a;
+}
+.temp-col-86 {
+  background-color: #ffe600;
+}
+.temp-col-95 {
+  background-color: #ffa600;
+}
+.temp-col-104 {
+  background-color: #ff1900;
 }
 </style>
