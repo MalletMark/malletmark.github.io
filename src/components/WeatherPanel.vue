@@ -1,6 +1,5 @@
 <template>
   <div class="weatherpanel p-5">
-    <h1>LSBN Weather Forecast</h1>
     <div
       v-for="(item) in cards"
       :key="item"
