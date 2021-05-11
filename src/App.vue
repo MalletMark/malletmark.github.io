@@ -1,5 +1,11 @@
 <template>
   <div id="app">
+    <h1>LSBN Weather Forecast</h1>
+    <p>
+      <router-link to="/home">Home</router-link>
+      <router-link to="/weather">Weather</router-link>
+    </p>
+    <router-view></router-view>
     <WeatherPanel time="2:30 PM" temp="60" weather="Windy" icon="https://images.vexels.com/media/users/3/136212/isolated/preview/7747f9f7a1dce4184897316278a76181-hurricane-wind-storm-by-vexels.png" />
   </div>
 </template>
