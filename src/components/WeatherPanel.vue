@@ -1,48 +1,52 @@
 <template>
+  <div>
+  <div class="weatherbackground" v-bind:style="{ 'background-image': 'url(' + backgroundUrl + ')' }" style="position:absolute; height: 100%; width: 100%; background-size: cover;"></div>
   <div class="weatherpanel p-5">
+    <h1 v-on:click="hideEditables" style="position: relative">LSBN Weather Forecast</h1>
+    <div v-if="showE" id="Editables" style="position: relative">
+      <button v-on:click="addCard">Add</button>
+      <button v-on:click="removeCard">Remove</button>
+      <input 
+        type="text" 
+        placeholder="paste background url here..."
+        v-on:blur="updateBackground" />
+    </div>
     <div
       v-for="(item) in cards"
       :key="item"
       :ref="addCard"
       class="b-0 shadow card d-inline-flex m-2 bd-highlight"
-      style="width: 10rem"
-    >
+      style="width: 10rem">
       <div class="card-body p-0">
         <input
           type="text"
           placeholder="1:30 PM"
           class="timeBox border-0 p-2 h2 mb-2 text-grey text-center w-100"
-          :class="item.tempcolor"
-        />
+          :class="item.tempcolor"/>
         <input
           type="text"
           placeholder="60"
           v-model="item.temp"
           v-on:change="selectTemp($event, item.ind)"
           class="tempBox border-0 w-100 text-center m-0"
-          style="font-size: 5rem; line-height: 0"
-        />
+          style="font-size: 5rem; line-height: 0"/>
         <img :src="item.src" class="img-thumbnail border-0" />
         <h1 class="weather-title">{{ item.title }}</h1>
+        </div>
+        <v-select
+          class="weather-dd"
+          :options="weatherOpts"
+          :clearable="false"
+          append-icon-cb="()"
+          v-on:input="selectWeather($event, item.ind)"
+          item-text="title"
+          item-value="src"
+          return-object>
+          <template slot="option" slot-scope="option">
+            <img :src="option.src" class="img-thumbnail border-0" />
+          </template>
+        </v-select>
       </div>
-      <v-select
-        class="weather-dd"
-        :options="weatherOpts"
-        :clearable="false"
-        append-icon-cb="()"
-        v-on:input="selectWeather($event, item.ind)"
-        item-text="title"
-        item-value="src"
-        return-object
-      >
-        <template slot="option" slot-scope="option">
-          <img :src="option.src" class="img-thumbnail border-0" />
-        </template>
-      </v-select>
-    </div>
-    <div id="example-1">
-      <button v-on:click="addCard">Add</button>
-      <button v-on:click="removeCard">Remove</button>
     </div>
   </div>
 </template>
@@ -58,6 +62,8 @@ export default {
   data() {
     return {
       tempNum: 0,
+      showE: true,
+      backgroundUrl: "https://media.apnarm.net.au/media/images/2020/08/07/v3imagesbina76005dedfda6535ff832055ec0c5527-pcbcbniwrx8555v0tu2.jpg",
       cards: [
         {
           ind: 0,
@@ -115,11 +121,18 @@ export default {
     };
   },
   methods: {
+    hideEditables() {
+      this.showE = !this.showE;
+    },
     addCard() {
       this.cards.push({ind:this.cards.length, temp:60, tempcolor:"bg-primary", title:"Windy", src: require('@/assets/w-icon-windy.png')});
     },
     removeCard() {
       this.cards.pop();
+    },
+    updateBackground(e) {
+      console.log('bg: ' + e.target.value);
+      this.backgroundUrl = e.target.value;
     },
     selectTemp(value, ind) {
       var tempVal = Number(this.cards[ind].temp);
